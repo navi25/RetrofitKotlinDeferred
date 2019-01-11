@@ -169,3 +169,8 @@ GlobalScope.launch(Dispatchers.Main) {
 }
 
 ```
+
+## [API #2 : TMDB API](https://developers.themoviedb.org/3) 
+
+The Movie Database (TMDb) API - It contains list of all popular, upcoming, latest, now showing etc movie and tv shows. This is one of the most popular API to play with too.
+
