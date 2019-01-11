@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
 
         val service = ApiFactory.placeholderApi
 
+        val movieService = ApiFactory.tmdbApi
+
 
         //Getting Posts from Jsonplaceholder API
         GlobalScope.launch(Dispatchers.Main) {
@@ -44,5 +46,19 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+
+
+        GlobalScope.launch(Dispatchers.Main) {
+            val popularMovieRequest = movieService.getPopularMovie()
+            try {
+                val response = popularMovieRequest.await()
+                val movieResponse = response.body() //This is single object Tmdb Movie response
+                val popularMovies = movieResponse?.results // This is list of TMDB Movie
+
+            }catch (e: Exception){
+
+            }
+        }
+
     }
 }

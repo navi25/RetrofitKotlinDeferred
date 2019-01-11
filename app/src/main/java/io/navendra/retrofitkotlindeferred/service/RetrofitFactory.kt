@@ -1,6 +1,7 @@
 package io.navendra.retrofitkotlindeferred.service
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import io.navendra.retrofitkotlindeferred.AppConstants
 
 import io.navendra.retrofitkotlindeferred.BuildConfig
 import okhttp3.Interceptor
@@ -14,7 +15,7 @@ object RetrofitFactory{
     private val authInterceptor = Interceptor {chain->
         val newUrl = chain.request().url()
                 .newBuilder()
-//                .addQueryParameter("api_key", AppConstants.tmdbApiKey)
+                .addQueryParameter("api_key", AppConstants.tmdbApiKey)
                 .build()
 
         val newRequest = chain.request()
