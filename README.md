@@ -103,3 +103,69 @@ GlobalScope.launch(Dispatchers.Main) {
 }
 ```
 
+**Fetching Users from /users**
+
+Data Model for user
+```kotlin
+
+// Data model for user
+data class PlaceholderUsers(
+    val id:Int,
+    val name: String,
+    val username: String,
+    val email: String,
+    val address: PlaceholderAddress,
+    val phone: String,
+    val website: String,
+    val company: PlaceholderCompany
+)
+
+/**
+ * Helper data classes for PlaceholderUsers
+ */
+data class PlaceholderAddress(
+    val street: String,
+    val suite: String,
+    val city: String,
+    val zipcode: String,
+    val geo: PlaceholderGeo
+)
+
+data class PlaceholderGeo(
+    val lat: String,
+    val lng: String
+)
+
+data class PlaceholderCompany(
+    val name: String,
+    val catchPhrase: String,
+    val bs: String
+)
+
+```
+
+Api call for User
+
+```kotlin
+
+interface PlaceholderApi{
+    @GET("/posts")
+    fun getPosts() : Deferred<Response<List<PlaceholderPosts>>>
+
+    @GET("/users")
+    fun getUsers() : Deferred<Response<List<PlaceholderUsers>>>
+}
+
+//Getting Users from Jsonplaceholder API
+GlobalScope.launch(Dispatchers.Main) {
+    val userRequest = service.getUsers()
+    try {
+        val response = userRequest.await()
+        val users = response.body() // This is List<PlaceholderUsers>
+
+    }catch (e: Exception){
+
+    }
+}
+
+```
