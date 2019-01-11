@@ -52,17 +52,11 @@ JSONPlaceholder comes with a set of 6 common resources:
 * [/users](https://jsonplaceholder.typicode.com/users)	10 user
 
 
-### A simple example (For /posts)
 
+### A simple example
+
+**Global Setup**
 ```kotlin
-
-//Data Model for Post
-data class PlaceholderPosts(
-    val id: Int,
-    val userId : Int,
-    val title: String,
-    val body: String
-)
 
 //ApiFactory to create jsonPlaceHolder Api
 object Apifactory{
@@ -76,6 +70,20 @@ object Apifactory{
     val placeHolderApi : PlaceholderApi = retrofit().create(PlaceholderApi::class.java)
 } 
 
+```
+
+**Fetching Posts from /posts**
+
+```kotlin
+
+//Data Model for Post
+data class PlaceholderPosts(
+    val id: Int,
+    val userId : Int,
+    val title: String,
+    val body: String
+)
+
 //A retrofit Network Interface for the Api
 interface PlaceholderApi{
     @GET("/posts")
@@ -83,6 +91,7 @@ interface PlaceholderApi{
 }
 
 //Finally making the call
+val service = ApiFactory.placeholderApi
 GlobalScope.launch(Dispatchers.Main) {
     val postRequest = service.getPosts() // Making Network call
     try {
@@ -93,3 +102,4 @@ GlobalScope.launch(Dispatchers.Main) {
     }
 }
 ```
+
