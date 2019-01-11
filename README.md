@@ -1,6 +1,15 @@
 # RetrofitKotlinDeferred
 Simple to Complex Tutorial for making network calls in Android using Retrofit2, Kotlin and its Deferred Type
 
+### Index
+* [Dependencies](https://github.com/navi25/RetrofitKotlinDeferred#dependencies) 
+* [API #1 : JSONPlaceHolder API](https://github.com/navi25/RetrofitKotlinDeferred#api-1--jsonplaceholder-api)
+  * [A simple Example (Fetch posts)](https://github.com/navi25/RetrofitKotlinDeferred#a-simple-example)
+* [API #2: TMDB API](https://github.com/navi25/RetrofitKotlinDeferred#api-2--tmdb-api)
+  * [Hiding API key in Version Control System](https://github.com/navi25/RetrofitKotlinDeferred#hiding-api-key-in-version-control-optional-but-recommended)
+  * [A Simple Example (Fetching popuplar movies)](https://github.com/navi25/RetrofitKotlinDeferred#a-simple-example-1)
+* [Example Project](https://github.com/navi25/RetrofitKotlinDeferred#example-project)
+
 ### Dependencies
 
 Add the following to the App dependencies
