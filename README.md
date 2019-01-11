@@ -174,3 +174,104 @@ GlobalScope.launch(Dispatchers.Main) {
 
 The Movie Database (TMDb) API - It contains list of all popular, upcoming, latest, now showing etc movie and tv shows. This is one of the most popular API to play with too.
 
+TMDB api requires an Api key to make requests. 
+
+* Make an account at [TMDB](https://www.themoviedb.org/)  
+* [Follow steps described here to register for an Api key](https://developers.themoviedb.org/3/getting-started/introduction). 
+
+### Hiding API key in Version Control (Optional but Recommended)
+
+Once you have Api key, do the following steps to hide it in VCS.
+
+* Add your key in **local.properties** present in root folder.
+* Get access to the key in **build.gradle** programmatically.
+* Then the key is available to you in the program though **BuildConfig**.
+
+```kotlin
+//In local.properties
+tmdb_api_key = "xxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+//In build.gradle (Module: app)
+buildTypes {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+    def tmdbApiKey = properties.getProperty("tmdb_api_key", "")
+
+    debug {
+        buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
+        resValue 'string', "api_key", tmdbApiKey
+    }
+
+    release {
+        buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
+        resValue 'string', "api_key", tmdbApiKey
+    }
+}
+
+//In your Constants File
+var tmdbApiKey = BuildConfig.TMDB_API_KEY
+
+```
+
+### A Simple Example
+
+#### Global Setup
+
+```kotlin
+
+//ApiFactory to create jsonPlaceHolder Api
+object Apifactory{
+    fun retrofit() : Retrofit = Retrofit.Builder()
+                .client(OkHttpClient().newBuilder().build())
+                .baseUrl("https://api.themoviedb.org/3/")
+                .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
+                .build()   
+
+   val tmdbApi : TmdbApi = retrofit().create(TmdbApi::class.java)
+} 
+
+```
+
+### Fetching Popular movies from Endpoint : /movie/popular
+
+```kotlin
+// Data Model for TMDB Movie item
+data class TmdbMovie(
+    val id: Int,
+    val vote_average: Double,
+    val title: String,
+    val overview: String,
+    val adult: Boolean
+)
+
+// Data Model for the Response returned from the TMDB Api
+data class TmdbMovieResponse(
+    val results: List<TmdbMovie>
+)
+
+//A retrofit Network Interface for the Api
+interface TmdbApi{
+    @GET("movie/popular")
+    fun getPopularMovie(): Deferred<Response<TmdbMovieResponse>>
+}
+
+//Finally making the call
+val movieService = ApiFactory.tmdbApi
+GlobalScope.launch(Dispatchers.Main) {
+    val popularMovieRequest = movieService.getPopularMovie()
+    try {
+        val response = popularMovieRequest.await()
+        val movieResponse = response.body() //This is single object Tmdb Movie response
+        val popularMovies = movieResponse?.results // This is list of TMDB Movie
+    }catch (e: Exception){
+
+    }
+}
+```
+
+## Example Project
+
+This project is filled with these examples. Clone it, add your API key in the local.properties and check out the implementation.
+
+Happy Coding!
