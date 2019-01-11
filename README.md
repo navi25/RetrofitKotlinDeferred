@@ -39,7 +39,7 @@ dependencies {
 }
 ```
 
-## API #1 : [JSONPlaceHolder API](https://jsonplaceholder.typicode.com ) 
+## [API #1 : JSONPlaceHolder API](https://jsonplaceholder.typicode.com ) 
 A Fake Online REST API for Testing and Prototyping
 
 JSONPlaceholder comes with a set of 6 common resources:
@@ -52,7 +52,7 @@ JSONPlaceholder comes with a set of 6 common resources:
 * [/users](https://jsonplaceholder.typicode.com/users)	10 user
 
 
-### A simple example
+### A simple example (For /posts)
 
 ```kotlin
 
