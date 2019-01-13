@@ -3,8 +3,10 @@ package io.navendra.retrofitkotlindeferred.ui
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.squareup.picasso.Picasso
 import io.navendra.retrofitkotlindeferred.R
 import io.navendra.retrofitkotlindeferred.service.ApiFactory
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -26,8 +28,12 @@ class MainActivity : AppCompatActivity() {
             val postRequest = service.getPosts()
             try {
                 val response = postRequest.await()
-                val posts = response.body()
-
+                if(response.isSuccessful){
+                    val posts = response.body()
+                }else{
+                    Log.d("MainActivity ",response.errorBody().toString())
+                }
+                
             }catch (e: Exception){
 
             }
@@ -39,8 +45,30 @@ class MainActivity : AppCompatActivity() {
             val userRequest = service.getUsers()
             try {
                 val response = userRequest.await()
-                val users = response.body()
-                val i=0
+                if(response.isSuccessful){
+                    val users = response.body()
+                }else{
+                    Log.d("MainActivity ",response.errorBody().toString())
+                }
+
+            }catch (e: Exception){
+
+            }
+        }
+
+        //Getting Users from Jsonplaceholder API
+        GlobalScope.launch(Dispatchers.Main) {
+            val userRequest = service.getPhotos()
+            try {
+                val response = userRequest.await()
+                if(response.isSuccessful){
+                    val photos = response.body()
+                    val lastPhotoUrl = photos?.last()?.url
+                    Picasso.get().load(lastPhotoUrl).into(imageView)
+                }else{
+                    Log.d("MainActivity ",response.errorBody().toString())
+                }
+
 
             }catch (e: Exception){
 
@@ -52,9 +80,12 @@ class MainActivity : AppCompatActivity() {
             val popularMovieRequest = movieService.getPopularMovie()
             try {
                 val response = popularMovieRequest.await()
-                val movieResponse = response.body() //This is single object Tmdb Movie response
-                val popularMovies = movieResponse?.results // This is list of TMDB Movie
-
+                if(response.isSuccessful){
+                    val movieResponse = response.body() //This is single object Tmdb Movie response
+                    val popularMovies = movieResponse?.results // This is list of TMDB Movie
+                }else{
+                    Log.d("MainActivity ",response.errorBody().toString())
+                }
             }catch (e: Exception){
 
             }
