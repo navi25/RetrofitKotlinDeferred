@@ -1,5 +1,6 @@
 # RetrofitKotlinDeferred
 Simple to Complex Tutorial for making network calls in Android using Retrofit2, Kotlin and its Deferred Type
+
 [For detailed explanation of code, visit here.](https://medium.com/@navendra/android-networking-in-2019-retrofit-with-kotlins-coroutines-aefe82c4d777)
 
 ### Index
